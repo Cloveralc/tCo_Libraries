@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="theme-color" content="#f3f0e7">
+		<title>tCo Libraries</title>
+		<link rel="stylesheet" href="assets/css/style.css">
+	</head>
+	<body>
+		<header class="top"><img class="brand-logo" src="assets/svgs/tco-libraries-logo.svg" alt="tCo Libraries">
+			<div class="top-actions">
+				<div class="topnote">文件在数据库中</div><button class="initialize-toggle" id="initializeLibrary" type="button" title="清除文库保存的记录并恢复初始设置">初始化</button><button class="theme-toggle" id="themeToggle" type="button"
+					aria-label="切换暗色模式" aria-pressed="false">暗色模式</button>
+			</div>
+		</header>
+		<main>
+			<section class="toolbar">
+				<div class="search"><input id="query" placeholder="搜索书名、文件名或文件夹…" autocomplete="off"><button id="clearSearch" class="search-clear" type="button" aria-label="清除搜索" title="清除搜索" hidden><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 6 8 8M14 6l-8 8"/></svg></button></div><div class="toolbar-filters"><select
+					id="format" class="library-select">
+					<option value="">所有格式</option>
+				</select><select id="sort" class="library-select">
+					<option value="name">名称排序</option>
+					<option value="new">最近修改</option>
+					<option value="size">文件大小</option>
+				</select></div>
+			</section>
+			<section class="workspace">
+				<aside class="shelf">
+					<div class="shelf-head"><div class="shelf-title"><strong id="shelfName">档案库</strong><span id="count">内置文库</span></div><button class="collection-toggle" id="collectionToggle" type="button" aria-pressed="false">收藏夹</button><button class="recent-toggle" id="recentToggle" type="button" aria-pressed="false">最近浏览</button><button class="shelf-view-toggle" id="viewToggle" type="button" aria-pressed="false">列表</button></div>
+					<div class="folder-navigation" id="folderNavigation" hidden><button id="folderRoot" type="button">根目录</button><button id="folderUp" type="button" hidden>上一级</button><span id="folderPath"></span></div>
+					<div class="booklist" id="books">
+						<div class="empty">选择一个包含文档的文件夹<br>网页会扫描 TXT、Markdown、PDF、Word 与媒体文件</div>
+					</div>
+					<div class="folder-list" id="folders" hidden></div>
+				</aside>
+				<article class="reading">
+					<div class="readerhead">
+						<div class="bookheading">
+							<h2 id="bookTitle">阅读区</h2><small id="bookMeta">支持 TXT、Markdown、LaTeX、EPUB、PDF、Word 与媒体文件</small>
+						</div>
+						<div class="reader-tools"><div class="image-zoom-controls" id="imageZoomControls" aria-label="图片缩放" hidden><span class="image-zoom-label">缩放</span><button class="image-zoom-button" id="imageZoomOut" type="button" aria-label="缩小图片" title="缩小">−</button><span class="image-zoom-percent" id="imageZoomPercent">100%</span><button class="image-zoom-button" id="imageZoomIn" type="button" aria-label="放大图片" title="放大">+</button></div><label class="tool">字号 <input id="size" type="range" min="14" max="32"
+								value="21"><span id="sizeValue" class="sizevalue">21</span></label><select
+								id="fontChoice" class="font-choice library-select" aria-label="字体"><option value="default">昊格阅楷真</option><option value="compatible">宋体SC</option><option value="local">本地字体...</option></select><input id="font" type="file" hidden
+								accept=".ttf,.otf,.woff,.woff2,font/*"><button class="reader-favorite-toggle" id="readerFavoriteToggle" type="button" aria-label="收藏这本书" aria-pressed="false" disabled hidden>☆</button><button class="focus-theme-toggle" id="focusThemeToggle" type="button">暗色模式</button><button class="focus-toggle"
+								id="focusToggle" type="button" aria-pressed="false" hidden>专注阅读</button><button class="exit-reader" id="exitReader" type="button" hidden>退出</button></div>
+					</div>
+						<div class="readerbody reader-empty" id="reader">
+						<div class="welcome">
+							<div class="leaf">❧</div><b>只是瞭望</b><span>从左侧选择文件，或先选择你的本地文件夹。</span>
+						</div>
+						</div>
+						<div class="reader-width-handle" id="readerWidthHandle" role="separator" aria-orientation="vertical" aria-label="拖动调整阅读区域宽度" aria-valuemin="650" aria-valuemax="1400" tabindex="0" hidden><span></span></div>
+					<div class="reading-progress" id="readingProgress" role="group" aria-label="阅读进度"><span class="progress-center"><span id="progressText">0%</span><span id="progressFallback" class="progress-fallback" hidden></span></span></div>
+				</article>
+			</section>
+			<footer class="library-footer">
+				<div class="footer-meta"><div id="status" class="status">这些是已经公开的归档库</div><div class="foot">tCo Libraries · flowIndex</div></div>
+				<div class="folder-actions"><button class="folder-restore" id="restoreFolder" type="button" hidden>恢复上次记录</button><button class="folderbtn" id="choose">选择文件夹</button><button class="folder-reset" id="resetLibrary" type="button" hidden>退出文件夹</button></div>
+			</footer>
+		</main>
+		<input id="directory" type="file" webkitdirectory directory multiple hidden>
+		<script src="assets/js/document-formats.js" defer></script>
+		<script src="assets/js/legacy-doc.js" defer></script>
+		<script src="assets/js/app.js" defer></script>
+	</body>
+</html>
