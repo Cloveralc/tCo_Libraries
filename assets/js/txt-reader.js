@@ -83,10 +83,17 @@ function markMeasure(name, startMark, endMark, keepStart = false) {
 }
 
 function publishPerformance(metrics = {}) {
-  const output = document.querySelector?.('#txtPerfStatus');
-  if (!output) return;
-  output.hidden = !performanceEnabled;
-  if (!performanceEnabled) return;
+  const terminal = document.querySelector?.('#terminalOutput');
+  if (!terminal) return;
+  let output = terminal.querySelector('#txtPerfStatus');
+  if (!performanceEnabled) { output?.remove(); return; }
+  const wasAtBottom = terminal.scrollHeight - terminal.scrollTop - terminal.clientHeight < 12;
+  if (!output) {
+    output = document.createElement('div');
+    output.id = 'txtPerfStatus';
+    output.className = 'terminal-line txt-perf-status';
+    terminal.append(output);
+  }
   const first = Number.isFinite(metrics.firstPaintMs) ? `${metrics.firstPaintMs.toFixed(0)}ms` : '…';
   const total = Number.isFinite(metrics.totalOpenMs) ? `${metrics.totalOpenMs.toFixed(0)}ms` : '…';
   const close = Number.isFinite(metrics.closeMs) ? `${metrics.closeMs.toFixed(1)}ms` : '…';
@@ -96,6 +103,7 @@ function publishPerformance(metrics = {}) {
   const frame = Number.isFinite(metrics.lastScrollFrameMs) ? `${metrics.lastScrollFrameMs.toFixed(1)}ms` : '…';
   const range = heapSamples.length > 1 ? `（近${heapSamples.length}次 ${(Math.min(...heapSamples) / 1048576).toFixed(0)}–${(Math.max(...heapSamples) / 1048576).toFixed(0)}MB）` : '';
   output.textContent = `TXT 首屏 ${first} · 打开 ${total} · 解码 ${decode} · 滚动帧 ${frame} · 退出 ${close} · 关闭 ${closedSessions} 次 · 堆 ${heap}${range}`;
+  if (wasAtBottom) terminal.scrollTop = terminal.scrollHeight;
 }
 
 export function setTxtPerformanceEnabled(enabled) {
